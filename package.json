@@ -11,7 +11,8 @@
     "heroku-postbuild": "npm run install-client && npm run build",
     "prestart": "",
     "client": "cd client && npm start",
-    "start": "concurrently \"nodemon server.js\"  \"tsc --watch\" \"npm run client\""
+    "dev-start": "concurrently \"nodemon server.js\"  \"tsc --watch\" \"npm run client\"",
+    "start": "node server.js && npm run client"
   },
   "keywords": [],
   "author": "",
