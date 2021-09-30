@@ -7,7 +7,6 @@ import bcrypt from 'bcrypt'
 import validator from 'email-validator'
 
 export const isAuthenticated = (req,res,next)=> {
-    console.log("inside isAuthenticated", req.user)
     req.isAuthenticated() ? next() : res.status(401).json("You have to log in to view this page");//res.sendStatus(401);
 }
 const authenticate = (req:Request,res:Response,next)=> {

@@ -9,7 +9,6 @@ const MathPreview = ({text}:{text:string}) => {
         let regex = new RegExp("\\$\\$(.*?)\\$\\$", "g"); 
         //return  <TeX>{String.raw`\begin{equation*} x=\frac{-b\pm\sqrt{b ^ 2 - 4ac}}{2a} \end{equation*}`}</TeX>
          return <div>{s.split(regex).map((item, i) => {
-             console.log(i, item)
             return i % 2 === 1 ? (
                 <TeX>{item}</TeX>
             ) : <>{item}</>;

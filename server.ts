@@ -26,6 +26,7 @@ if(process.env.NODE_ENV==='production'){
 const corsOptions ={
     origin:`http://localhost:${process.env.CLIENT_PORT}`, //<-react app
     credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
 }
 //middleware
 app.use(cors(corsOptions));

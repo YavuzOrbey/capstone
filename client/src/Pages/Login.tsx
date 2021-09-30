@@ -7,6 +7,7 @@ import {
   } from '../redux/features/user/userSlice'
 import { useDispatch } from 'react-redux'
 const Login = () => {
+    console.log(process.env.REACT_APP_SERVER_PORT)
    /*  document.cookie = 'name=Paul;expires=' + new Date(2021, 8,21).toUTCString()
 
     console.log(document.cookie)
