@@ -22,7 +22,11 @@ const port = process.env.SERVER_PORT || 5000;
 
 if(process.env.NODE_ENV==='production'){
     app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile('client/build')
+    })
 }
+
 const corsOptions ={
     origin:`http://localhost:${process.env.CLIENT_PORT}`, //<-react app
     credentials:true,            //access-control-allow-credentials:true
