@@ -203,21 +203,22 @@ class CreateQuestionApp extends Component {
 export default CreateQuestionApp;
  */
 
+import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectQuestion } from "../redux/features/question/questionSlice";
-import Question from "../types/Question";
-import MathPreview from "./MathPreview";
+import {changeMessage, clearMessage, selectMessage} from '../redux/features/flashmessage/flashMessageSlice';
 import MyComponent from "./MyComponent";
 import QuestionInput from "./QuestionInput";
-import QuestionPreview from "./QuestionPreview";
-import RadioButtons from "./RadioButtons";
+import QuestionText from "./QuestionText";
 
 
 
 const CreateQuestion = () => {
 
     const question = useSelector(selectQuestion);
+
+    const dispatch = useDispatch()
     /* const form = {
         QuestionTextInput: useRef() as React.MutableRefObject<HTMLTextAreaElement>,
         AnswerChoiceAInput: useRef() as React.MutableRefObject<HTMLInputElement>,
@@ -233,7 +234,17 @@ const CreateQuestion = () => {
 
      const createQuestion = (event:any):void => {
          event.preventDefault();
-         console.log(question)
+         if(question!==null){
+            axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/question`, question)
+            .then(res => {
+                console.log(res.data)
+                dispatch(changeMessage(res.data))
+                setTimeout(()=>{
+                    dispatch(clearMessage()) 
+                },3000)
+            }).catch(err=>console.log(err))
+        
+        }
         /* event.preventDefault();
         const newQuestion = {
             questionText: form.QuestionTextInput.current.value,
@@ -249,11 +260,22 @@ const CreateQuestion = () => {
     } 
 
     return (
-    <div className="container border  rounded bg-light  border-5 m-2 p-2" >
+    <div className="container border  rounded bg-light  border-1 m-2 p-4" >
         <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
                 <form onSubmit={createQuestion} >
+
+          
+                    
+                    <div className="row">
+                    <div className="col-md-6">
                     <h3>Add New Question</h3>
+                    </div>
+                    <div className="col-md-6">
+                    <MyComponent />
+                        
+                    </div>
+                    </div>
                     {/* <div className="mb-3">
                         <label>Question Text</label>
                         <textarea className="form-control" ref={form.QuestionTextInput}
@@ -276,17 +298,14 @@ const CreateQuestion = () => {
                         <label>Answer Choice D</label>
                         <input type="text" className="form-control" placeholder="Answer Choice D"  ref={form.AnswerChoiceDInput}/>
                     </div> */}
-
+                    <QuestionText />
                     <QuestionInput letter={'A'} />
                     <QuestionInput letter={'B'} />
                     <QuestionInput letter={'C'} />
                     <QuestionInput letter={'D'} />
             <button className="btn btn-outline-primary">Create</button>
         </form></div>
-        <div className="col-md-6">
-        <MyComponent />
-            
-        </div>
+
         </div></div>)
 }
 export default CreateQuestion; 

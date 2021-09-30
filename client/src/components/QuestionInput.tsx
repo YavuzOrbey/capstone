@@ -11,10 +11,15 @@ const QuestionInput = ({letter})=>{
         const newQuestionAnswerChoices = {...questionAnswerChoices, [letter]:e.target.value}
         dispatch(changeAnswerChoices(newQuestionAnswerChoices))
     }
-    return <div className="mb-3">
-    <label>{letter}</label>
-    <input type="text" className="form-control" placeholder={letter} onChange={handleChange}/> 
-    <MathPreview text={questionAnswerChoices[letter]} />
-</div>
+    return <div className="row mb-3">
+    <div className="col-md-12" >
+    <label>{`Answer Choice ${letter}`}</label>
+        <div className="form-floating">
+            <textarea className="form-control"  placeholder={letter} onChange={handleChange}></textarea>
+            <label >{questionAnswerChoices[letter] ? <MathPreview text={questionAnswerChoices[letter]} />: letter}</label>
+            </div>
+        </div>
+
+    </div>
 }
 export default QuestionInput;

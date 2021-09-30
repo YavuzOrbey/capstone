@@ -10,14 +10,14 @@ type User = {
 }
 const ViewUsers = () => {
     const [users,setUsers]:[User[], any] = useState([])
-    const [flashMessage, setFlashMessage] = useState({} as Message);
+    /* const [flashMessage, setFlashMessage] = useState({} as Message); */
     useEffect(()=>{
         axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT }/users`, { withCredentials: true }) //if we didn't have that credientials object server wouldnt get user
         .then(res => {
             setUsers(res.data)
 
         }).catch(err=>{
-            setFlashMessage({type: "danger", message: err.response.data})
+           /*  setFlashMessage({type: "danger", message: err.response.data}) */
             
         }).finally(()=>console.log("Finally"))
     }, [])
@@ -51,7 +51,7 @@ const ViewUsers = () => {
             setUsers(newUsers)
         }).catch(err=>console.log(err))
     }
-    return <div> {flashMessage && <FlashMessage flashMessage={flashMessage} /> }{users.length===0 ?<div>Loading...</div> : table}</div>
+    return <div> {/* {flashMessage && <FlashMessage flashMessage={flashMessage} /> } */}{users.length===0 ?<div>Loading...</div> : table}</div>
 }
 
 export default ViewUsers

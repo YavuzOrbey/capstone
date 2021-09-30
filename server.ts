@@ -7,9 +7,10 @@ import flash from 'express-flash'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import { initialize as initializePassport} from './passport-config.js'
-
+import path from 'path';
 import {router as usersRouter} from './routes/users.js'
 import {router as authRouter} from './routes/auth.js'
+import {router as questionRouter} from './routes/questions.js';
 /* if(process.env.NODE_ENV!=='production'){
     dotenv.config();
 } */
@@ -19,13 +20,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.SERVER_PORT || 5000;
-
-if(process.env.NODE_ENV==='production'){
-    app.use(express.static('client/build'))
-    app.get('*', (req, res) => {
-        res.sendFile('client/build')
-    })
-}
+app.use(express.static('client/build'));
 
 const corsOptions ={
     origin:`http://localhost:${process.env.CLIENT_PORT}`, //<-react app
@@ -55,6 +50,8 @@ connection.once('open', ()=> {
 
 app.use("/users", usersRouter)
 app.use("/auth", authRouter)
+app.use("/question", questionRouter)
+
 
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`)

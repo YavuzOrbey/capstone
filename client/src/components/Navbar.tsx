@@ -28,6 +28,7 @@ const NavbarCustom = () => {
             <>
             <Nav.Link as={Link} to="/users">Users</Nav.Link>
             <Nav.Link as={Link} to="/create-question">Create Question</Nav.Link>
+            <Nav.Link as={Link} to="/questions">Questions</Nav.Link>
             </>
           :<>
            <Nav.Link as={Link} to="/login">Login</Nav.Link>

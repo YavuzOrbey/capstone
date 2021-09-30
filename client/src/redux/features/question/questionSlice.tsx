@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 export const slice = createSlice({
-    name: 'question',
+    name: 'createQuestion',
     initialState: {
         currentQuestion: {
             questionText: "",
-            answerChoices: {}
+            answerChoices: {},
+            correctAnswer: ""
         },
     },
     reducers: {
@@ -18,13 +19,17 @@ export const slice = createSlice({
         },
         changeQuestionText: (state, action)=>{
             state.currentQuestion.questionText = action.payload;
+        },
+        changeCorrectAnswer: (state, action)=> {
+            state.currentQuestion.correctAnswer = action.payload;
         }
     }
 })
 
-export const {changeQuestion, changeAnswerChoices, changeQuestionText} = slice.actions;
+export const {changeQuestion, changeAnswerChoices, changeQuestionText, changeCorrectAnswer} = slice.actions;
 
-export const selectQuestion = (state: RootState) => state.question.currentQuestion;
-export const selectQuestionText = (state: RootState) => state.question.currentQuestion.questionText;
-export const selectQuestionAnswerChoices = (state: RootState) => state.question.currentQuestion.answerChoices;
+export const selectQuestion = (state: RootState) => state.createQuestion.currentQuestion;
+export const selectQuestionText = (state: RootState) => state.createQuestion.currentQuestion.questionText;
+export const selectQuestionAnswerChoices = (state: RootState) => state.createQuestion.currentQuestion.answerChoices;
+export const selectCorrectAnswer = (state: RootState) => state.createQuestion.currentQuestion.correctAnswer;
 export default slice.reducer;

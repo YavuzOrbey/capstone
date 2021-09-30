@@ -14,19 +14,19 @@ const Login = () => {
     sessionStorage.setItem("name", "yavuz")
     sessionStorage.getItem("name") */
     const [state, setState] = useState({email: "", password: ""})
-    const [flashMessage, setFlashMessage] = useState({} as Message);
+    /* const [flashMessage, setFlashMessage] = useState({} as Message); */
     const dispatch = useDispatch()
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if(state!==null){
             axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/auth/login`, state,  { withCredentials: true })
             .then(res => {
-                setFlashMessage({type: "success", message: res.data.message})
+              /*   setFlashMessage({type: "success", message: res.data.message}) */
                 dispatch(changeUser(res.data.user))
                 
             }).catch(err=>{
                 console.log(err.response.data)
-                setFlashMessage({type: "danger", message: err.response.data})
+                /* setFlashMessage({type: "danger", message: err.response.data}) */
             }).finally(/* ()=>{
                 setTimeout(()=>
                 setFlashMessage(null),3000)
@@ -51,7 +51,7 @@ const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => {
 }
 return (<div>
 <form action="#" onSubmit={handleSubmit}>
-     {flashMessage && <FlashMessage flashMessage={flashMessage} /> }
+     {/* {flashMessage && <FlashMessage flashMessage={flashMessage} /> } */}
         <h3>Login</h3>
         <div className="mb-3 row">
             <div className="col-md-6">

@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux' //EMPHASIS YOU CANNOT/SHOULD NOT import the reduce store into react components
 import NavbarCustom from './Navbar';
@@ -8,6 +8,7 @@ import ViewUsers from './ViewUsers'
 import Login from "../Pages/Login";
 import {Home} from "../Pages/Home"
 import Dashboard from '../Pages/Dashboard'
+import Questions from "../Pages/Questions";
 import {
     changeUser,
     logoutUser,
@@ -18,10 +19,12 @@ import { Profile } from "../Pages/Profile";
 import axios from "axios";
 import MyComponent from "./MyComponent";
 import CreateQuestion from "./CreateQuestion";
+import { selectMessage } from "../redux/features/flashmessage/flashMessageSlice";
+import FlashMessage from "./FlashMessage";
 export const App = () => {
     const user = useSelector(selectUser)
     const dispatch = useDispatch()
-    
+
     const getUser = () => {
         console.log('app refreshed')
         axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/auth/user`, {
@@ -38,6 +41,7 @@ export const App = () => {
     },[user]);
     return  <Router><div className="container">
     <NavbarCustom />
+    <FlashMessage />
     <br />
     <Route exact path="/">
         {user ? <Redirect to="/dashboard" /> : <Home />}
@@ -70,6 +74,9 @@ export const App = () => {
         </Route>
         <Route path="/create-question">
             <CreateQuestion />
+        </Route>
+        <Route path="/questions">
+            <Questions />
         </Route>
         </>
 

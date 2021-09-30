@@ -1,9 +1,9 @@
 type Question = {
     questionText: string;
-    answerChoiceA: string;
-    answerChoiceB: string;
-    answerChoiceC: string;
-    answerChoiceD: string;
+    A: string;
+    B: string;
+    C: string;
+    D: string;
 }
 
 export default Question;

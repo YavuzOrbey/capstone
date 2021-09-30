@@ -42,7 +42,7 @@ const MyComponent = () => {
 
         <div>
         <h3>Math View</h3>
-      <MathWithKeyboardButton>{"x=\\frac{-b\\pm\\sqrt{b ^ 2 - 4ac}}{2a}"}</MathWithKeyboardButton>
+      <MathWithKeyboardButton>{""}</MathWithKeyboardButton>
       </div>
   )
 }

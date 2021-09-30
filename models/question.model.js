@@ -8,29 +8,31 @@ const questionSchema = new Schema({
         trim: true,
         minlength: 3,
     },
-    answerChoiceA: {
+    A: {
         type: String,
         required: true,
         trim: true,
-        minlength: 3
     },
-    answerChoiceB: {
+    B: {
         type: String,
         required: true,
         trim: true,
-        minlength: 3
     },
-    answerChoiceC: {
+    C: {
         type: String,
         required: true,
         trim: true,
-        minlength: 3
     },
-    answerChoiceD: {
+    D: {
         type: String,
         required: true,
         trim: true,
-        minlength: 3
+    },
+    correctAnswer: {
+        type: String,
+        required: true,
+        trim: true,
+        maxlength: 1
     }
 }, {
     timestamps: true

@@ -7,13 +7,12 @@ type User = {
 } | null
 const Register = ()=> {
 const [state, setState] = useState({email: "", password: ""})
-const [flashMessage, setFlashMessage] = useState(null);
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if(state!==null){
-        axios.post(`http://localhost:5000/auth/register`, state)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/auth/register`, state)
         .then(res => {
-            setFlashMessage(res.data)
+            //setFlashMessage(res.data)
         }).catch(err=>console.log(err))
     
     }
@@ -34,7 +33,7 @@ const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => {
     });
 }
 return <div>
-    {flashMessage && <FlashMessage flashMessage={flashMessage} /> }
+    {/* {flashMessage && <FlashMessage flashMessage={flashMessage} /> } */}
     <h3>Register</h3>
     <form action="#" onSubmit={handleSubmit}>
         <div className="mb-3 row">

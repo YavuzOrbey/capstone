@@ -4,24 +4,29 @@ export interface QuestionDoc extends Document {
       required: boolean;
       trim:boolean
     };
-    answerChoiceA: {
+    A: {
+      type: string ;
+      required: boolean;
+      trim:boolean
+    };
+    B: {
+      type: string;
+      required: boolean;
+      trim:boolean
+      };
+    C: {
       type: string;
       required: boolean;
       trim:boolean
     };
-    answerChoiceB: {
-        type: string;
-        required: boolean;
-        trim:boolean
-      };
-    answerChoiceC: {
-    type: string;
-    required: boolean;
-    trim:boolean
+    D: {
+      type: string;
+      required: boolean;
+      trim:boolean
     };
-    answerChoiceD: {
-    type: string;
-    required: boolean;
-    trim:boolean
-    };
+    correctAnswer: {
+      type: string;
+      required: boolean;
+      trim: boolean;
+    }
   }
