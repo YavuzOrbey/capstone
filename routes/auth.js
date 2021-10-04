@@ -12,8 +12,9 @@ const authenticate = (req, res, next) => {
         if (err)
             throw err; //{ return next(err); }
         if (!user) {
+            let message = { type: "danger", text: info.message };
             res.status(401);
-            res.send(info.message); //res.end(info.message);
+            res.send(message); //res.end(info.message);
             //return;
         }
         if (user) {
@@ -38,13 +39,22 @@ router.route("/logout").get((req, res) => {
     });
 });
 //req.logout();
+router.route("/").delete((req, res) => {
+    console.log(req.user);
+    if (req.user) {
+        console.log("inside delete");
+        User.findByIdAndDelete(req.user._id)
+            .then(() => res.json("User deleted"))
+            .catch((err) => res.status(400).json('Error ' + err));
+    }
+});
 router.route('/register').post((req, res) => {
     const { email, password } = req === null || req === void 0 ? void 0 : req.body;
     //first check if email already exists in DB and if it does return flash message informing user
     //console.log(User.schema)
     if (!validator.validate(email)) {
-        console.log("invalid email");
-        return;
+        let message = { type: "danger", text: "Must use a valid email" };
+        return res.status(200).json(message);
     }
     console.log('inside register');
     // User.findOne({email}).then((user)=>console.log(user)).catch(err=>console.error(err))
@@ -57,7 +67,10 @@ router.route('/register').post((req, res) => {
                 // Store hash in your password DB.
                 const newUser = new User({ email, password: hash });
                 newUser.save()
-                    .then(() => res.json({ type: "success", message: "User added!" }))
+                    .then(() => {
+                    let message = { type: "success", text: "User added!" };
+                    return res.json(message);
+                })
                     .catch(saveErr => {
                     console.log(saveErr);
                     return res.status(400).json('Error ' + saveErr);

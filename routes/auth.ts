@@ -5,7 +5,7 @@ import {User} from '../models/user.model.js'
 import {UserDoc} from '../interfaces.types/UserDoc'
 import bcrypt from 'bcrypt'
 import validator from 'email-validator'
-
+import Message from '../interfaces.types/MessageType'
 export const isAuthenticated = (req,res,next)=> {
     req.isAuthenticated() ? next() : res.status(401).json("You have to log in to view this page");//res.sendStatus(401);
 }
@@ -13,8 +13,9 @@ const authenticate = (req:Request,res:Response,next)=> {
     passport.authenticate('local', (err,user,info)=>{
         if (err) throw err;//{ return next(err); }
         if (!user) { 
+            let message: Message = {type: "danger", text: info.message}
             res.status(401);
-            res.send(info.message);//res.end(info.message);
+            res.send(message);//res.end(info.message);
             //return;
         }
         if(user){
@@ -40,15 +41,23 @@ router.route("/logout").get((req,res)=> {
 });
     //req.logout();
 
-
+router.route("/").delete((req,res)=>{
+    console.log(req.user)
+    if(req.user){
+        console.log("inside delete")
+        User.findByIdAndDelete(req.user._id)
+        .then(()=>res.json("User deleted"))
+        .catch((err:any)=>res.status(400).json('Error ' + err))
+    }
+})
 
 router.route('/register').post((req,res)=>{
     const {email, password} = req?.body
     //first check if email already exists in DB and if it does return flash message informing user
     //console.log(User.schema)
     if(!validator.validate(email)){
-        console.log("invalid email")
-        return
+        let message:Message = {type: "danger", text: "Must use a valid email"}
+        return res.status(200).json(message)
     }
 
     console.log('inside register')
@@ -66,7 +75,10 @@ router.route('/register').post((req,res)=>{
                 const newUser = new User({email, password:hash})
 
                 newUser.save()
-                .then(()=>res.json({type: "success", message: "User added!"}))
+                .then(()=>{
+                    let message:Message = {type: "success", text: "User added!"}
+                    return res.json(message);
+                )
                 .catch(saveErr=>{
                     console.log(saveErr)
                     

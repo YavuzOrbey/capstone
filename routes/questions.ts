@@ -25,6 +25,7 @@ router.route("/").post((req, res) => {
     }
     console.log({questionText, ...answerChoices})
     const newQuestion = new Question({questionText, ...answerChoices, correctAnswer: 'A'})
+    
     console.log(newQuestion)
         newQuestion.save()
             .then(() => res.json({ type: "success", text: "Question added!" }))
@@ -33,6 +34,12 @@ router.route("/").post((req, res) => {
             })
 
 })
+
+router.route("/").delete((req,res)=>{
+        Question.findByIdAndDelete(req.params.id)
+            .then(() => res.json("Question deleted"))
+            .catch((err) => res.status(400).json('Error ' + err))
+    });
 
 /* app.put("/todo/:id", (req, res) => {
     Todo.findByIdAndUpdate(req.params.id, { content: req.body.content })

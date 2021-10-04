@@ -11,9 +11,10 @@ export const slice = createSlice({
   reducers: {
     changeMessage: (state, action) =>{
         state.message = action.payload;
+        console.log("What state.message is changing to", action.payload)
     },
     clearMessage: state => {
-      state.message = {type:null, text: null}
+        state.message = {type:null, text: null}
     }
   },
 });

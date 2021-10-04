@@ -3,9 +3,10 @@ import axios from "axios";
 import FlashMessage from "../components/FlashMessage";
 import Message from "../types/Message";
 import {
-    changeUser
+    changeUser, logoutUser
   } from '../redux/features/user/userSlice'
 import { useDispatch } from 'react-redux'
+import { changeMessage, clearMessage } from "../redux/features/flashmessage/flashMessageSlice";
 const Login = () => {
     console.log(process.env.REACT_APP_SERVER_PORT)
    /*  document.cookie = 'name=Paul;expires=' + new Date(2021, 8,21).toUTCString()
@@ -23,14 +24,12 @@ const Login = () => {
             .then(res => {
               /*   setFlashMessage({type: "success", message: res.data.message}) */
                 dispatch(changeUser(res.data.user))
-                
+                dispatch(changeMessage(res.data.message))
             }).catch(err=>{
                 console.log(err.response.data)
+                dispatch(changeMessage(err.response.data))
                 /* setFlashMessage({type: "danger", message: err.response.data}) */
-            }).finally(/* ()=>{
-                setTimeout(()=>
-                setFlashMessage(null),3000)
-            } */);
+            }).finally( );
         
         }
     
@@ -65,7 +64,7 @@ return (<div>
             <input className="form-control" type="password" onChange={onChangePassword}/>
             </div>
         </div>
-        <button>Login</button>
+        <button className="btn btn-secondary">Login</button>
 
     </form>
     </div>)

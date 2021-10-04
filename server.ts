@@ -14,13 +14,13 @@ import {router as questionRouter} from './routes/questions.js';
 /* if(process.env.NODE_ENV!=='production'){
     dotenv.config();
 } */
-
+const __dirname = path.resolve();
 
 dotenv.config();
 
 const app = express();
-const port = process.env.SERVER_PORT || 5000;
-app.use(express.static('client/build'));
+const port = process.env.PORT || 5000;
+
 
 const corsOptions ={
     origin:`http://localhost:${process.env.CLIENT_PORT}`, //<-react app
@@ -30,6 +30,8 @@ const corsOptions ={
 //middleware
 app.use(cors(corsOptions));
 app.use(express.json()) 
+
+app.use(express.static(path.join(__dirname, 'client/build')))
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -41,7 +43,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 initializePassport(passport)
 const uri = process.env.MONGODB_URI;
-mongoose.connect(uri )  // {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true} as ConnectOptions
+mongoose.connect(uri)  // {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true} as ConnectOptions
 
 const connection = mongoose.connection;
 connection.once('open', ()=> {
@@ -52,7 +54,10 @@ app.use("/users", usersRouter)
 app.use("/auth", authRouter)
 app.use("/question", questionRouter)
 
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  
+  });
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`)
 })

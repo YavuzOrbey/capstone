@@ -9,6 +9,7 @@ import Login from "../Pages/Login";
 import {Home} from "../Pages/Home"
 import Dashboard from '../Pages/Dashboard'
 import Questions from "../Pages/Questions";
+import BlankPage from '../Pages/BlankPage'
 import {
     changeUser,
     logoutUser,
@@ -21,10 +22,12 @@ import MyComponent from "./MyComponent";
 import CreateQuestion from "./CreateQuestion";
 import { selectMessage } from "../redux/features/flashmessage/flashMessageSlice";
 import FlashMessage from "./FlashMessage";
+import Demo from './Demo'
 export const App = () => {
     const user = useSelector(selectUser)
     const dispatch = useDispatch()
 
+    const [timer, setTimer] = useState(1);
     const getUser = () => {
         console.log('app refreshed')
         axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/auth/user`, {
@@ -39,6 +42,10 @@ export const App = () => {
     useEffect(()=>{
         console.log("user changed")
     },[user]);
+    
+    setTimeout(()=>{
+        setTimer(0);
+    }, 10000)
     return  <Router><div className="container">
     <NavbarCustom />
     <FlashMessage />
@@ -77,6 +84,9 @@ export const App = () => {
         </Route>
         <Route path="/questions">
             <Questions />
+        </Route>
+        <Route path="/demo">
+            <Demo />
         </Route>
         </>
 

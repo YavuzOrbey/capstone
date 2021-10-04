@@ -32,6 +32,11 @@ router.route("/").post((req, res) => {
         return res.status(400).json('Error ' + saveErr);
     });
 });
+router.route("/").delete((req, res) => {
+    Question.findByIdAndDelete(req.params.id)
+        .then(() => res.json("Question deleted"))
+        .catch((err) => res.status(400).json('Error ' + err));
+});
 /* app.put("/todo/:id", (req, res) => {
     Todo.findByIdAndUpdate(req.params.id, { content: req.body.content })
         .then(() => res.json("Todo updated"))

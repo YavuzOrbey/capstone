@@ -26,7 +26,6 @@ const NavbarCustom = () => {
         <Nav className="me-auto">
         {user ? 
             <>
-            <Nav.Link as={Link} to="/users">Users</Nav.Link>
             <Nav.Link as={Link} to="/create-question">Create Question</Nav.Link>
             <Nav.Link as={Link} to="/questions">Questions</Nav.Link>
             </>
@@ -39,7 +38,7 @@ const NavbarCustom = () => {
       </Navbar.Collapse>
       {user ? <Navbar.Collapse className="justify-content-end">
             <NavDropdown title={user?.email} id="basic-nav-dropdown">
-            <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/dashboard">Profile</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item as={Link} to="/logout" onClick={logout}>Logout</NavDropdown.Item>
           </NavDropdown>
